@@ -7,6 +7,7 @@
  int led3 = 11;
  int led4 = 12;
  int val;
+ int buttonSwitch = 0;
  //initialize variables with global scope for some reason
 void setup() {
  Serial.begin(9600);
@@ -21,7 +22,12 @@ void setup() {
 }
 
 void loop() {
-while (digitalRead(buttonPin) == HIGH) {
+if (digitalRead(buttonPin) == HIGH){
+  buttonSwitch = 1;
+  delay(2000);
+}
+//while (digitalRead(buttonPin) == HIGH) {
+while (buttonSwitch == 1) {
   digitalWrite(onBoardLED, LOW);
   val = 1023 - analogRead(lightSensorPin);
   //record value from light sensor
@@ -63,6 +69,9 @@ while (digitalRead(buttonPin) == HIGH) {
     digitalWrite(led3, LOW);
     digitalWrite(led4, HIGH);
     Serial.println("this shouldn't be happening");
+  }
+  if (digitalRead(buttonPin) == HIGH){
+  buttonSwitch = 0;
   }
   delay(1000);
 }
